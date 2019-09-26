@@ -24,4 +24,6 @@ Route::post('/', 'PersonasController@index')->name('mostrar');
 
 Route::get('/{id}', 'PersonasController@edit')->name('editar');
 
+Route::put('/{id}','PersonasController@update')->name('update');
 
+Route::delete('/{id}', 'PersonasController@destroy')->name('delete');

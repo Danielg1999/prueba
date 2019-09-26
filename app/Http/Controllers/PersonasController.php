@@ -39,7 +39,13 @@ class PersonasController extends Controller
      */
     public function store(Request $request)
     {
-      
+      $request->validate([
+          'nombre' => 'required',
+          'apellido' => 'required',
+          'genero' => 'required',
+          'email' => 'required',
+          'fecha_nacimiento' => 'required',
+      ]);
         $persona = new Persona(array(
             'nombre' => $request->get('nombre'),
             'apellido' => $request->get('apellido'),
@@ -62,7 +68,7 @@ class PersonasController extends Controller
      */
     public function show(Personas $personas)
     {
-        $personas = Persona::all();
+        $usuarios = Persona::all();
         return view('inicio', compact(
             'nombre',
             'apellido',
@@ -91,9 +97,16 @@ class PersonasController extends Controller
      * @param  \App\Personas  $personas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Personas $personas)
+    public function update(Request $request, $id, Personas $personas)
     {
-        //
+        $update = App\Persona::firstOrfail($id);
+        $update->nombre = $request->nombre;
+        $update->apellido = $request->apellido;
+        $update->genero = $request->genero;
+        $update->email = $request->email;
+        $update->fecha_nacimiento = $request->fecha_nacimiento;
+        $update->save();
+        return view('inicio');
     }
 
     /**
@@ -102,8 +115,10 @@ class PersonasController extends Controller
      * @param  \App\Personas  $personas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Personas $personas)
+    public function destroy($id)
     {
-        //
+        $eliminar = App\Persona::firstOrfail($id);
+        $eliminar->delete();
+        return view('inicio');
     }
 }
