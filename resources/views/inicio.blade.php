@@ -1,8 +1,8 @@
-@extends('plantilla')
+@extends('layouts.app')
 
 @section('content')
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-7">
             <table class="table">
                 <thead>
                    
@@ -13,21 +13,19 @@
                     <th>Fecha Nacimiento</th>
                     <th>Acciones</th>
                 </thead>
-                @foreach ($usuarios as $person)
-                
-                    
-                        
-                
+                <tbody>
+                @foreach ($nombres as $nombre)
                     <tr>
-                        <td>{!! $usuarios->nombre !!}</td>
-                        <td>{!! $usuarios->apellido !!}</td>
-                        <td>{!! $usuarios->genero !!}</td>
-                        <td>{!! $usuarios->email !!}</td>
-                        <td>{!! $usuarios->fecha_nacimiento !!}</td>
+                        <td>{{ $nombre->nombre}}</td>
+                        <td>{!! $nombre->apellido !!}</td>
+                        <td>{!! $nombre->genero !!}</td>
+                        <td>{!! $nombre->email !!}</td>
+                        <td>{!! $nombre->fecha_nacimiento !!}</td>
                      
                         <td>
-                        <a href="{{route('editar', $usuarios->id)}}" class="btn btn.warning">Editar</a>
-                        <form action="{{route('eliminar', $usuarios->id)}}" method="POST" class="d-inline">
+                        <a href="{{url('actualizar/'. $nombre->id.'/edit')}}" class="btn btn.warning">Editar</a>
+                        
+                        <form action="{{ url('eliminar/'. $nombre->id)}}" method="post" class="d-inline">
                         @method('DELETE')
                         {{ csrf_field() }}
                         <button type="submit" class="btn btn-danger">Eliminar</button>
@@ -38,11 +36,11 @@
                     
                 
                 @endforeach 
-                
+            </tbody>
             </table>
         </div>
         <!--Fomrulario-->
-        <div class="col-md-4">
+        <div class="col-md-5">
             
             <h3 class="text-center mb-4">Agregar Datos:</h3>
             

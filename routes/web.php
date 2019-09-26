@@ -16,14 +16,15 @@ use App\Http\Controllers\PersonasController;
 Route::get('/', function(){
     return view('inicio');
 });
+Auth::routes();
 Route::get('/', 'PersonasController@index')->name('inicio');
 
 Route::post('/', 'PersonasController@store')->name('store');
 
-Route::post('/', 'PersonasController@index')->name('mostrar');
+Route::post('/inicio', 'PersonasController@index')->name('mostrar');
 
 Route::get('/{id}', 'PersonasController@edit')->name('editar');
 
-Route::put('/{id}','PersonasController@update')->name('update');
+Route::put('/editar/{id}/editar','PersonasController@update')->name('update');
 
-Route::delete('/{id}', 'PersonasController@destroy')->name('delete');
+Route::delete('/eliminar{id}', 'PersonasController@destroy')->name('delete');

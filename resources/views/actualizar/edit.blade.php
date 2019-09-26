@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('plantilla')
 
 @section('content')
 
 <h3 class="text-center mb-3 pt-3">Editar {{$actualizar->id}}</h3>
-<form action="{{url('actualizar/'.$actualizar->id.'/edit')}}" method="POST">
-        @method('PATCH')
+<form action="{{route('editar/'.$actualizar->id)}}" method="POST">
+        @method('PUT')
         {{ csrf_field() }}
         <div class="form-group">
             <input type="text" name="nombre" id="nombre" value="{{$actualizar->nombre}}" class="form-control">

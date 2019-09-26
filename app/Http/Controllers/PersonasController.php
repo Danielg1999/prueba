@@ -15,8 +15,8 @@ class PersonasController extends Controller
      */
     public function index()
     {
-        
-        return view('inicio'
+        $datos['nombres']=Persona::paginate(5);
+        return view('inicio',$datos
        );
         
     }
@@ -46,7 +46,7 @@ class PersonasController extends Controller
           'email' => 'required',
           'fecha_nacimiento' => 'required',
       ]);
-        $persona = new Persona(array(
+        $nombres = new Persona(array(
             'nombre' => $request->get('nombre'),
             'apellido' => $request->get('apellido'),
             'genero' => $request->get('genero'),
@@ -54,7 +54,7 @@ class PersonasController extends Controller
             'fecha_nacimiento' => $request->get('fecha_nacimiento')
         ));
 
-        $persona->save();
+        $nombres->save();
         return view('inicio');
 
         
@@ -68,14 +68,14 @@ class PersonasController extends Controller
      */
     public function show(Personas $personas)
     {
-        $usuarios = Persona::all();
-        return view('inicio', compact(
-            'nombre',
-            'apellido',
-            'genero',
-            'email',
-            'fecha_nacimiento',
-   ));
+       // $personas = Persona::all();
+        //return view('inicio', compact(
+          //  'nombre',
+            //'apellido',
+            //'genero',
+           // 'email',
+            //'fecha_nacimiento',
+   //));
     }
 
     /**
@@ -86,8 +86,12 @@ class PersonasController extends Controller
      */
     public function edit($id)
     {
-        $actualizar = App\Persona::firstOrfail($id);
-        return view('editar' ,compact('nombre','apellido','genero','email','fecha_nacimiento')); 
+        $actualizar = Persona::Personas($id)->firstOrFail;
+        return view('editar' ,compact('nombre',
+        'apellido',
+        'genero',
+        'email',
+        'fecha_nacimiento')); 
     }
 
     /**
@@ -117,8 +121,10 @@ class PersonasController extends Controller
      */
     public function destroy($id)
     {
-        $eliminar = App\Persona::firstOrfail($id);
-        $eliminar->delete();
+        Persona::destroy($id);
+
+        //$eliminar = App\Persona::firstOrfail($id);
+        //$eliminar->delete();
         return view('inicio');
     }
 }
