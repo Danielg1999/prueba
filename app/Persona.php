@@ -11,4 +11,6 @@ class Persona extends Model
     'genero',
     'email',
     'fecha_nacimiento'];
+
+    
 }

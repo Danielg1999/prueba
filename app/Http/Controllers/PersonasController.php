@@ -15,9 +15,9 @@ class PersonasController extends Controller
      */
     public function index()
     {
-        $datos['nombres']=Persona::paginate(5);
-        return view('inicio',$datos
-       );
+       // Se listan todas las personas
+       $personas = Persona::all();
+       return view('index', compact('personas'));
         
     }
 
@@ -39,25 +39,16 @@ class PersonasController extends Controller
      */
     public function store(Request $request)
     {
-      $request->validate([
-          'nombre' => 'required',
-          'apellido' => 'required',
-          'genero' => 'required',
-          'email' => 'required',
-          'fecha_nacimiento' => 'required',
-      ]);
-        $nombres = new Persona(array(
-            'nombre' => $request->get('nombre'),
-            'apellido' => $request->get('apellido'),
-            'genero' => $request->get('genero'),
-            'email' => $request->get('email'),
-            'fecha_nacimiento' => $request->get('fecha_nacimiento')
-        ));
+      $usuario = new Persona;
 
-        $nombres->save();
-        return view('inicio');
+      $usuario->nombre = $request->nombre;
+      $usuario->apellido = $request->apellido;
+      $usuario->genero = $request->genero;
+      $usuario->email = $request->email;
+      $usuario->fecha_nacimiento = $request->fecha_nacimiento;
 
-        
+      $usuario->save();
+      return view('inicio');
     }
 
     /**
@@ -68,14 +59,7 @@ class PersonasController extends Controller
      */
     public function show(Personas $personas)
     {
-       // $personas = Persona::all();
-        //return view('inicio', compact(
-          //  'nombre',
-            //'apellido',
-            //'genero',
-           // 'email',
-            //'fecha_nacimiento',
-   //));
+      
     }
 
     /**
@@ -86,12 +70,8 @@ class PersonasController extends Controller
      */
     public function edit($id)
     {
-        $actualizar = Persona::Personas($id)->firstOrFail;
-        return view('editar' ,compact('nombre',
-        'apellido',
-        'genero',
-        'email',
-        'fecha_nacimiento')); 
+       $personas = Persona::find($id);
+       return view('editar',compact('personas'));
     }
 
     /**
@@ -101,16 +81,10 @@ class PersonasController extends Controller
      * @param  \App\Personas  $personas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, Personas $personas)
+    public function update(Request $request, $id)
     {
-        $update = App\Persona::firstOrfail($id);
-        $update->nombre = $request->nombre;
-        $update->apellido = $request->apellido;
-        $update->genero = $request->genero;
-        $update->email = $request->email;
-        $update->fecha_nacimiento = $request->fecha_nacimiento;
-        $update->save();
-        return view('inicio');
+        Persona::findOrFail($id)->update($request->all());
+        return back();
     }
 
     /**
@@ -121,10 +95,8 @@ class PersonasController extends Controller
      */
     public function destroy($id)
     {
-        Persona::destroy($id);
-
-        //$eliminar = App\Persona::firstOrfail($id);
-        //$eliminar->delete();
-        return view('inicio');
+        personas::findOrFail($id)->delete();
+        //personas::destroy($id);
+        return back();
     }
 }

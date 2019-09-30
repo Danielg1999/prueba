@@ -2,45 +2,9 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-7">
-            <table class="table">
-                <thead>
-                   
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Genero</th>
-                    <th>Email</th>
-                    <th>Fecha Nacimiento</th>
-                    <th>Acciones</th>
-                </thead>
-                <tbody>
-                @foreach ($nombres as $nombre)
-                    <tr>
-                        <td>{{ $nombre->nombre}}</td>
-                        <td>{!! $nombre->apellido !!}</td>
-                        <td>{!! $nombre->genero !!}</td>
-                        <td>{!! $nombre->email !!}</td>
-                        <td>{!! $nombre->fecha_nacimiento !!}</td>
-                     
-                        <td>
-                        <a href="{{url('actualizar/'. $nombre->id.'/edit')}}" class="btn btn.warning">Editar</a>
-                        
-                        <form action="{{ url('eliminar/'. $nombre->id)}}" method="post" class="d-inline">
-                        @method('DELETE')
-                        {{ csrf_field() }}
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                        </form>
-                        </td>
-                        
-                    </tr>
-                    
-                
-                @endforeach 
-            </tbody>
-            </table>
-        </div>
+        
         <!--Fomrulario-->
-        <div class="col-md-5">
+        <div class="container col-md-5">
             
             <h3 class="text-center mb-4">Agregar Datos:</h3>
             
